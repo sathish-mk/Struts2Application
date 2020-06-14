@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+   
+   <constant name="struts.devMode" value="true"></constant>
+    <package name="default" extends="struts-default,json-default" namespace="/">
+    <interceptors>
+    	<interceptor class="com.ValidationStruts2.LoginInterceptor" name="loginInterceptor" />
+    		<interceptor-stack name="loginStack">
+    			<interceptor-ref name="loginInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	
+    </interceptors>
+    <default-interceptor-ref name="loginStack"></default-interceptor-ref>
+	<global-results>
+		<result name="login">/index.jsp</result>
+	</global-results>
+    <action name="loginAuthentification" class="com.ValidationStruts2.LoginAction">
+        <result name="user" >/success.jsp</result>
+        <result name="login">/index.jsp</result>
+        <result name="seller">/sellerPage.jsp</result>
+        <result name="admin">/adminPage.jsp</result>
+    </action> 
+    <action name="salesProductAction" class="com.ValidationStruts2.SalesProduct" method="display">
+    	<result name="none">/salesProduct.jsp</result>
+    </action>
+	<action name="edit" class="com.ValidationStruts2.SalesProduct" method="edit">
+	<result name="success">/salesProduct.jsp</result>
+	</action>
+    
+    <action name="registeration" class="com.ValidationStruts2.RegisterAction">
+    	<result name="input">/index.jsp</result>
+    </action>
+    <action name="logout" class="com.ValidationStruts2.LogoutAction">
+        <result name="logout-success">/index.jsp</result>
+    </action> 
+    <action name="cart" class="com.ValidationStruts2.CartAction">
+        <result name="success">/cart.jsp</result>
+    </action> 
+    
+    
+
+  </package>
+<package name="s" extends="json-default">
+        <action name="Getme" class="com.ValidationStruts2.GetJSON">
+			<result type="json" >
+			<param name="root">li</param>
+			</result>
+	</action>
+	<action name="salesProductForm" class="com.ValidationStruts2.SalesProduct">
+    	<result >/salesProduct.jsp</result>
+    </action>
+    <action name="requestList" class="com.ValidationStruts2.SellerRequestList" >
+    	<result type="json" />
+    </action>
+    <action name="userSellerList" class="com.ValidationStruts2.UserSellerList" >
+    	<result type="json" >
+    	<param name='root'>list</param>
+    	</result>
+    </action>
+    <action name="request" class="com.ValidationStruts2.RequestAction">
+    	<result type="json"></result>
+    	<param name="root">results</param>
+    </action>
+	<action name="acceptdeny" class="com.ValidationStruts2.AcceptDenyRequest">
+		<result type="json">/adminPage.jsp</result>
+	</action>
+	
+	<action name="addComment" class="com.ValidationStruts2.CartAction" method="addComment">
+		<result>/cart.jsp</result>
+	</action>
+	<action name="getComments" class="com.ValidationStruts2.CartAction" method="getComments">
+		<result type="json">
+		<param name='root'>li</param>
+		</result>
+	</action>
+	<action name="getProductDetails" class="com.ValidationStruts2.CartAction" method="getProductDetails">
+	<result type="json">
+	<param name="root">li</param>
+	</result>
+	</action>
+</package>
+</struts>
